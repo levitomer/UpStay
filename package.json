@@ -1,0 +1,67 @@
+{
+    "name": "upstay-test",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+        "axios": "^0.19.0",
+        "core-js": "^3.6.1",
+        "dotenv": "^8.2.0",
+        "esm": "^3.2.25",
+        "express": "^4.17.1",
+        "faker": "^4.1.0",
+        "module-alias": "^2.2.2",
+        "open": "^7.0.0",
+        "pg": "^7.15.1",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "regenerator-runtime": "^0.13.3",
+        "socket.io": "^2.3.0",
+        "socket.io-client": "^2.3.0",
+        "styled-components": "^4.4.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.7.7",
+        "@babel/preset-env": "^7.7.7",
+        "@babel/preset-react": "^7.8.3",
+        "babel-eslint": "^10.0.3",
+        "babel-loader": "^8.0.6",
+        "babel-plugin-module-resolver": "^4.0.0",
+        "babel-plugin-styled-components": "^1.10.6",
+        "css-loader": "^3.4.0",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.7.0",
+        "eslint-import-resolver-alias": "^1.1.2",
+        "eslint-loader": "^3.0.3",
+        "eslint-plugin-import": "^2.19.1",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-react": "^7.17.0",
+        "eslint-plugin-react-hooks": "^2.3.0",
+        "html-webpack-plugin": "^3.2.0",
+        "node-sass": "^4.13.0",
+        "sass-loader": "^8.0.0",
+        "style-loader": "^1.1.2",
+        "webpack": "^4.41.4",
+        "webpack-dev-middleware": "^3.7.2",
+        "webpack-hot-middleware": "^2.25.0"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node .",
+        "build": "webpack --mode=production"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ancillary-streams/upstay-test.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ancillary-streams/upstay-test/issues"
+    },
+    "_moduleAliases": {
+        "@upstay": "."
+    },
+    "homepage": "https://github.com/ancillary-streams/upstay-test#readme"
+}
