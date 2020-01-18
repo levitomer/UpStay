@@ -4,7 +4,10 @@ import routes from '@upstay/routes';
 import * as reservationsService from '@upstay/services/reservations';
 import serverDev from './server.dev';
 import serverIO from './server.io';
+import * as db from '@upstay/db/reservations';
+import EventEmitter from 'events';
 
+const emitter = new EventEmitter();
 const app = express();
 const port = process.env.PORT || 9999;
 const appURL = `http://localhost:${port}`;
@@ -19,7 +22,10 @@ serverDev(app);
 
 // socket.io server
 const server = serverIO(app, socket => {
-    reservationsService.start(reservation => {});
+    reservationsService.start(reservation => {
+        console.log(reservation);
+        db.addReservation(reservation);
+    });
 });
 
 server.listen(port, () => {

@@ -5,6 +5,7 @@ const emitter = new EventEmitter();
 const NEW_RESERVATION_EVENT = 'newReservation';
 
 let timeoutId;
+
 const generate = () => {
     const reservation = {
         uuid: faker.random.uuid(),
@@ -32,6 +33,7 @@ const generate = () => {
 };
 
 let running = false;
+
 export const start = newReservationCallback => {
     if (running) {
         return;
