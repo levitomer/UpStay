@@ -1,24 +1,33 @@
 import React from 'react';
-import { Container } from './app.style';
-import { Reservation } from './Reservation';
+import SVGUpsay from './svg-upstay';
+import { Container, Welcome, ReservationSection } from './App.style';
+import Reservation from './Reservation';
 
 class Reservations extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            reservations: []
-        };
     }
-    componentDidMount() {}
 
     render() {
+        const { reservations } = this.props;
+
+        if (!reservations) {
+            return (
+                <Container>
+                    <Welcome>Loading Reservations</Welcome>
+                    <SVGUpsay />
+                </Container>
+            );
+        }
         return (
-            <Container>
-                {this.state.reservations.map(reservation => (
-                    <Reservation reservation={reservation} />
+            <ReservationSection>
+                {reservations.map(reservation => (
+                    <Reservation
+                        key={reservation.id}
+                        reservation={reservation}
+                    />
                 ))}
-            </Container>
+            </ReservationSection>
         );
     }
 }

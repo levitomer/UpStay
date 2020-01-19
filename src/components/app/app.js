@@ -1,50 +1,59 @@
 import React from 'react';
 import SVGUpsay from './svg-upstay';
-// import Reservations from './Reservations';
-import { Container, Welcome } from './app.style';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router';
-import socketIOClient from 'socket.io-client';
+import Reservations from './Reservations';
+import { Container, Welcome, ReservationsSection } from './App.style';
+import clientIO from 'socket.io-client';
+
+const socket = clientIO.connect('http://localhost:9999');
 
 class App extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            response: false,
-            endpoint: 'http://localhost:9999'
+            reservations: []
         };
+        this.handleGetReservations = this.handleGetReservations.bind(this);
+        this.handleNewReservation = this.handleNewReservation.bind(this);
     }
 
     componentDidMount() {
-        const { endpoint } = this.state;
-        const socket = socketIOClient(endpoint);
-        socket.on('connection');
+        socket.on('getReservations', this.handleGetReservations);
+        socket.on('newReservation', this.handleNewReservation);
     }
-    render() {
-        return (
-            // <Router>
-            //     <ul>
-            //         <li>
-            //             <Link to="/">Home</Link>
-            //         </li>
-            //         <li>
-            //             <Link to="/reservations">Reservations</Link>
-            //         </li>
-            //     </ul>
-            //     <Switch>
-            //         <Route exact path="/">
 
-            //         </Route>
-            //         <Route path="/reservations">
-            //             <Container>
-            //                 <Reservations />
-            //             </Container>
-            //         </Route>
-            //     </Switch>
-            // </Router>
-            <Container>
-                <Welcome>Welcome to</Welcome>
+    componentWillUnmount() {
+        socket.close();
+    }
+
+    handleGetReservations(reservations) {
+        this.setState({
+            reservations: reservations
+        });
+    }
+
+    handleNewReservation(reservation) {
+        console.log(reservation);
+        this.setState({
+            reservations: [...this.state.reservations, reservation]
+        });
+    }
+
+    render() {
+        if (!this.state.reservations.length) {
+            return (
+                <Container>
+                    <Welcome>Welcome to</Welcome>
+                    <SVGUpsay />
+                </Container>
+            );
+        }
+        return (
+            <ReservationsSection>
                 <SVGUpsay />
-            </Container>
+                <Welcome>Reservations</Welcome>
+                <Reservations reservations={this.state.reservations} />
+            </ReservationsSection>
         );
     }
 }
