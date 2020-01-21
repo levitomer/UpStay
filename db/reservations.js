@@ -35,7 +35,7 @@ export const getHotels = async hotels => {
 
 export const getReservations = async reservations => {
     try {
-        await query('SELECT * FROM reservations LIMIT 3', (error, results) => {
+        await query('SELECT * FROM reservations', (error, results) => {
             if (error) {
                 throw error;
             }

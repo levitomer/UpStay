@@ -23,6 +23,15 @@ export const ToolBar = styled.div`
     justify-content: space-between;
 `;
 
+export const Select = styled.div`
+    display: flex;
+    justify-content: flex-end;
+`;
+
+export const Input = styled.input`
+    width: 230px;
+`;
+
 export const ReservationSection = styled.div`
     display: flex;
     flex-direction: column;
@@ -43,6 +52,17 @@ export const Sleev = styled.div`
     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
         0 0 40px rgba(0, 0, 0, 0.1) inset;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    @media (max-width: 425px) {
+        columns: 2;
+        height: 240px;
+        width: auto;
+        padding: 30px;
+        margin: 10px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 `;
 
 export const Label = styled.div`
@@ -57,9 +77,13 @@ export const Uuid = styled.div`
     font-size: 12px;
     bottom: 0;
     left: 0;
+    @media (max-width: 425px) {
+        left: initial;
+    }
 `;
 
 export const CheckIn = styled.div`
+    order: 1;
     display: flex;
     width: 20%;
     flex-direction: column;
@@ -67,6 +91,7 @@ export const CheckIn = styled.div`
 `;
 
 export const CheckOut = styled.div`
+    order: 1;
     display: flex;
     width: 20%;
     flex-direction: column;
@@ -74,6 +99,7 @@ export const CheckOut = styled.div`
 `;
 
 export const Hotel = styled.div`
+    order: 2;
     display: flex;
     width: 30%;
     flex-direction: column;
@@ -81,17 +107,11 @@ export const Hotel = styled.div`
 `;
 
 export const Room = styled.div`
+    order: 3;
     display: flex;
     width: 30%;
     flex-direction: column;
     justify-content: space-evenly;
-`;
-
-export const GuestName = styled.div`
-    position: absolute;
-    margin: 3px 5px;
-    top: 0;
-    left: 0;
 `;
 
 export const Price = styled.div`

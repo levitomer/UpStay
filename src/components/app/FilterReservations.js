@@ -1,9 +1,9 @@
 import React from 'react';
-import {} from './App.style';
+import { Input } from './App.style';
 
 const FilterReservations = ({ onFilterReservations }) => {
     return (
-        <input
+        <Input
             type="text"
             onChange={e => {
                 onFilterReservations(e.target.value);
