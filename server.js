@@ -26,6 +26,7 @@ const server = serverIO(app, socket => {
         db.addReservation(reservation);
     });
 
+    socket.on('getHotels', db.getHotels);
     socket.on('getCurrencies', db.getCurrencies);
     socket.on('getReservations', db.getReservations);
     socket.on('disconnect', () => console.log('User disconnected'));

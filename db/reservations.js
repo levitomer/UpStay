@@ -19,6 +19,20 @@ export const getCurrencies = async currencies => {
     }
 };
 
+export const getHotels = async hotels => {
+    try {
+        await query('SELECT * FROM hotels', (error, results) => {
+            if (error) {
+                throw error;
+            }
+
+            hotels(results.rows);
+        });
+    } catch (error) {
+        console.error(`Error: ${error.code}`);
+    }
+};
+
 export const getReservations = async reservations => {
     try {
         await query('SELECT * FROM reservations LIMIT 3', (error, results) => {

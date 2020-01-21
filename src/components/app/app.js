@@ -14,12 +14,14 @@ class App extends React.Component {
         super(props);
 
         this.state = {
+            hotels: [],
             reservations: [],
             currencies: [],
             selectedCurrency: 'USD',
             currencyQuote: 3.45
         };
 
+        this.handleGetHotels = this.handleGetHotels.bind(this);
         this.handleGetReservations = this.handleGetReservations.bind(this);
         this.handleNewReservation = this.handleNewReservation.bind(this);
         this.handleGetCurrencies = this.handleGetCurrencies.bind(this);
@@ -27,6 +29,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
+        socket.emit('getHotels', this.handleGetHotels);
         socket.emit('getCurrencies', this.handleGetCurrencies);
         socket.emit('getReservations', this.handleGetReservations);
         socket.on('newReservation', this.handleNewReservation);
@@ -34,6 +37,12 @@ class App extends React.Component {
 
     componentWillUnmount() {
         socket.close();
+    }
+
+    handleGetHotels(hotels) {
+        this.setState({
+            hotels
+        });
     }
 
     handleGetCurrencies(currencies) {
@@ -73,9 +82,11 @@ class App extends React.Component {
             reservations,
             currencies,
             selectedCurrency,
-            currencyQuote
+            currencyQuote,
+            hotels
         } = this.state;
-        if (!reservations.length || !currencies.length) {
+
+        if (!reservations.length || !currencies.length || !hotels.length) {
             return (
                 <Container>
                     <Welcome>Welcome to</Welcome>
@@ -93,6 +104,7 @@ class App extends React.Component {
                     selectedCurrency={selectedCurrency}
                 />
                 <Reservations
+                    hotels={hotels}
                     reservations={reservations}
                     currencyQuote={currencyQuote}
                     selectedCurrency={selectedCurrency}

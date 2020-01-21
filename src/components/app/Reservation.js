@@ -12,13 +12,16 @@ import {
     Price
 } from './App.style';
 
-const Reservation = ({ reservation, selectedCurrency, currencyQuote }) => {
+const Reservation = ({
+    reservation,
+    hotels,
+    selectedCurrency,
+    currencyQuote
+}) => {
     const {
         uuid,
         hotel_id,
-        currency,
         price,
-        guest_name,
         room_name,
         arrival_date,
         nights
@@ -26,13 +29,13 @@ const Reservation = ({ reservation, selectedCurrency, currencyQuote }) => {
 
     const checkIn = new Date(arrival_date);
     const chekOut = new Date(arrival_date);
-    const convertedPrice = Math.floor((price / currencyQuote) * 100) / 100;
-
     chekOut.setDate(checkIn.getDate() + nights);
+
+    const convertedPrice = Math.floor((price / currencyQuote) * 100) / 100;
+    const hotel = hotels.find(({ id }) => hotel_id === id);
 
     return (
         <Sleev>
-            <GuestName>{guest_name}</GuestName>
             <Uuid>{uuid}</Uuid>
             <CheckIn>
                 <Label>Check-in</Label>
@@ -44,7 +47,7 @@ const Reservation = ({ reservation, selectedCurrency, currencyQuote }) => {
             </CheckOut>
             <Hotel>
                 <Label>Hotel</Label>
-                {hotel_id}
+                {hotel.name}
             </Hotel>
             <Room>
                 <Label>Room</Label>
