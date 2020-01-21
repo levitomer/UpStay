@@ -1,16 +1,31 @@
 import { query } from './pg';
-import EventEmitter from 'events';
 
-const emitter = new EventEmitter();
-
-export const getReservations = async (request, response) => {
+export const getCurrencies = async currencies => {
     try {
-        await query('SELECT * FROM reservations', (error, results) => {
+        await query('SELECT enum_range(NULL::currency)', (error, results) => {
             if (error) {
                 throw error;
             }
-            emitter.emit('getReservations', response.json(results.rows));
-            response.status(200);
+
+            const enums = results.rows[0].enum_range;
+            const json = JSON.stringify(enums);
+            const currencySymbols = json.replace(/[{}"]/g, '').toUpperCase();
+            const currenciesMap = currencySymbols.split(',');
+
+            currencies(currenciesMap);
+        });
+    } catch (error) {
+        console.error(`Error: ${error.code}`);
+    }
+};
+
+export const getReservations = async reservations => {
+    try {
+        await query('SELECT * FROM reservations LIMIT 3', (error, results) => {
+            if (error) {
+                throw error;
+            }
+            reservations(results.rows);
         });
     } catch (error) {
         console.error(`Error: ${error.code}`);

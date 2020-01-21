@@ -4,10 +4,9 @@ import * as reservationsService from '@upstay/services/reservations';
 import serverDev from './server.dev';
 import serverIO from './server.io';
 import * as db from '@upstay/db/reservations';
-import axios from 'axios';
 
 const app = express();
-const port = process.env.PORT || 9999;
+const port = process.env.PORT || 8081;
 const appURL = `http://localhost:${port}`;
 
 app.use(express.json());
@@ -27,18 +26,8 @@ const server = serverIO(app, socket => {
         db.addReservation(reservation);
     });
 
-    const getReservations = async socket => {
-        try {
-            const res = await axios.get(
-                `http://localhost:9999/api/reservations`
-            );
-            socket.emit('getReservations', res.data);
-        } catch (error) {
-            console.error(`Error: ${error.code}`);
-        }
-    };
-
-    getReservations(socket);
+    socket.on('getCurrencies', db.getCurrencies);
+    socket.on('getReservations', db.getReservations);
     socket.on('disconnect', () => console.log('User disconnected'));
 });
 

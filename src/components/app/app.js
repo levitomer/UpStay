@@ -1,24 +1,34 @@
 import React from 'react';
 import SVGUpsay from './svg-upstay';
 import Reservations from './Reservations';
+import SelectCurrency from './SelectCurrency';
 import { Container, Welcome, ReservationsSection } from './App.style';
 import clientIO from 'socket.io-client';
+import axios from 'axios';
 
-const socket = clientIO.connect('http://localhost:9999');
+const access_key = 'c8b57b494662b67e04c0fd31bf3830c2';
+const socket = clientIO.connect('http://localhost:8081');
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            reservations: []
+            reservations: [],
+            currencies: [],
+            selectedCurrency: 'USD',
+            currencyQuote: 3.45
         };
+
         this.handleGetReservations = this.handleGetReservations.bind(this);
         this.handleNewReservation = this.handleNewReservation.bind(this);
+        this.handleGetCurrencies = this.handleGetCurrencies.bind(this);
+        this.handleChangeCurrency = this.handleChangeCurrency.bind(this);
     }
 
     componentDidMount() {
-        socket.on('getReservations', this.handleGetReservations);
+        socket.emit('getCurrencies', this.handleGetCurrencies);
+        socket.emit('getReservations', this.handleGetReservations);
         socket.on('newReservation', this.handleNewReservation);
     }
 
@@ -26,21 +36,46 @@ class App extends React.Component {
         socket.close();
     }
 
+    handleGetCurrencies(currencies) {
+        this.setState({
+            currencies
+        });
+    }
+
+    handleChangeCurrency(selectedCurrency) {
+        axios
+            .get(
+                `http://api.currencylayer.com/live?access_key=${access_key}&currencies=${selectedCurrency}`
+            )
+            .then(response => {
+                const quote = Object.values(response.data.quotes)[0];
+                this.setState({
+                    currencyQuote: quote
+                });
+            })
+            .catch(error => console.log(error));
+    }
+
     handleGetReservations(reservations) {
         this.setState({
-            reservations: reservations
+            reservations
         });
     }
 
     handleNewReservation(reservation) {
-        console.log(reservation);
         this.setState({
             reservations: [...this.state.reservations, reservation]
         });
     }
 
     render() {
-        if (!this.state.reservations.length) {
+        const {
+            reservations,
+            currencies,
+            selectedCurrency,
+            currencyQuote
+        } = this.state;
+        if (!reservations.length || !currencies.length) {
             return (
                 <Container>
                     <Welcome>Welcome to</Welcome>
@@ -52,7 +87,16 @@ class App extends React.Component {
             <ReservationsSection>
                 <SVGUpsay />
                 <Welcome>Reservations</Welcome>
-                <Reservations reservations={this.state.reservations} />
+                <SelectCurrency
+                    currencies={currencies}
+                    onChangeCurrency={this.handleChangeCurrency}
+                    selectedCurrency={selectedCurrency}
+                />
+                <Reservations
+                    reservations={reservations}
+                    currencyQuote={currencyQuote}
+                    selectedCurrency={selectedCurrency}
+                />
             </ReservationsSection>
         );
     }

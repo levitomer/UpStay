@@ -9,7 +9,7 @@ class Reservations extends React.Component {
     }
 
     render() {
-        const { reservations } = this.props;
+        const { reservations, selectedCurrency, currencyQuote } = this.props;
 
         if (!reservations) {
             return (
@@ -24,6 +24,8 @@ class Reservations extends React.Component {
                 {reservations.map(reservation => (
                     <Reservation
                         key={reservation.id}
+                        currencyQuote={currencyQuote}
+                        selectedCurrency={selectedCurrency}
                         reservation={reservation}
                     />
                 ))}

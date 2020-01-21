@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
     Sleev,
     Label,
@@ -11,7 +12,7 @@ import {
     Price
 } from './App.style';
 
-const Reservation = ({ reservation }) => {
+const Reservation = ({ reservation, selectedCurrency, currencyQuote }) => {
     const {
         uuid,
         hotel_id,
@@ -25,6 +26,8 @@ const Reservation = ({ reservation }) => {
 
     const checkIn = new Date(arrival_date);
     const chekOut = new Date(arrival_date);
+    const convertedPrice = Math.floor((price / currencyQuote) * 100) / 100;
+
     chekOut.setDate(checkIn.getDate() + nights);
 
     return (
@@ -47,7 +50,9 @@ const Reservation = ({ reservation }) => {
                 <Label>Room</Label>
                 {room_name}
             </Room>
-            <Price>{price}</Price>
+            <Price>
+                {convertedPrice} {selectedCurrency}
+            </Price>
         </Sleev>
     );
 };
