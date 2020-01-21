@@ -30,7 +30,6 @@ const Reservation = ({
     const checkIn = new Date(arrival_date);
     const chekOut = new Date(arrival_date);
     chekOut.setDate(checkIn.getDate() + nights);
-
     const convertedPrice = Math.floor((price / currencyQuote) * 100) / 100;
     const hotel = hotels.find(({ id }) => hotel_id === id);
 

@@ -18,6 +18,11 @@ export const ReservationsSection = styled.div`
     padding: 5%;
 `;
 
+export const ToolBar = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
 export const ReservationSection = styled.div`
     display: flex;
     flex-direction: column;
@@ -31,7 +36,7 @@ export const Sleev = styled.div`
     position: relative;
     display: flex;
     padding: 5%;
-    margin: 2%;
+    margin: 1% 0%;
     justify-content: space-evenly;
     -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
         0 0 40px rgba(0, 0, 0, 0.1) inset;

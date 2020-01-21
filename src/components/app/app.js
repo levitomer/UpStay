@@ -1,8 +1,9 @@
 import React from 'react';
 import SVGUpsay from './svg-upstay';
 import Reservations from './Reservations';
+import FilterReservations from './FilterReservations';
 import SelectCurrency from './SelectCurrency';
-import { Container, Welcome, ReservationsSection } from './App.style';
+import { Container, Welcome, ReservationsSection, ToolBar } from './App.style';
 import clientIO from 'socket.io-client';
 import axios from 'axios';
 
@@ -16,6 +17,7 @@ class App extends React.Component {
         this.state = {
             hotels: [],
             reservations: [],
+            selectedUuid: null,
             currencies: [],
             selectedCurrency: 'USD',
             currencyQuote: 3.45
@@ -26,6 +28,9 @@ class App extends React.Component {
         this.handleNewReservation = this.handleNewReservation.bind(this);
         this.handleGetCurrencies = this.handleGetCurrencies.bind(this);
         this.handleChangeCurrency = this.handleChangeCurrency.bind(this);
+        this.handleFilterReservations = this.handleFilterReservations.bind(
+            this
+        );
     }
 
     componentDidMount() {
@@ -77,10 +82,15 @@ class App extends React.Component {
         });
     }
 
+    handleFilterReservations(selectedUuid) {
+        this.setState({ selectedUuid });
+    }
+
     render() {
         const {
             reservations,
             currencies,
+            selectedUuid,
             selectedCurrency,
             currencyQuote,
             hotels
@@ -94,18 +104,30 @@ class App extends React.Component {
                 </Container>
             );
         }
+
         return (
             <ReservationsSection>
                 <SVGUpsay />
                 <Welcome>Reservations</Welcome>
-                <SelectCurrency
-                    currencies={currencies}
-                    onChangeCurrency={this.handleChangeCurrency}
-                    selectedCurrency={selectedCurrency}
-                />
+                <ToolBar>
+                    <FilterReservations
+                        onFilterReservations={this.handleFilterReservations}
+                    />
+                    <SelectCurrency
+                        currencies={currencies}
+                        onChangeCurrency={this.handleChangeCurrency}
+                        selectedCurrency={selectedCurrency}
+                    />
+                </ToolBar>
                 <Reservations
                     hotels={hotels}
-                    reservations={reservations}
+                    reservations={
+                        selectedUuid
+                            ? reservations.filter(({ uuid }) =>
+                                  uuid.startsWith(selectedUuid)
+                              )
+                            : reservations
+                    }
                     currencyQuote={currencyQuote}
                     selectedCurrency={selectedCurrency}
                 />
