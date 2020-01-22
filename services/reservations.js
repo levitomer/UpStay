@@ -46,4 +46,5 @@ export const stop = () => {
     clearTimeout(timeoutId);
     running = false;
     emitter.removeAllListeners(NEW_RESERVATION_EVENT);
+    console.log('User disconnected');
 };

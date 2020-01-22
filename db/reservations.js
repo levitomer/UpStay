@@ -85,3 +85,15 @@ export const addReservation = async reservation => {
         console.error(`Error: ${error.code}`);
     }
 };
+
+export const cleanReservations = async () => {
+    try {
+        await query('DELETE FROM reservations', (error, _) => {
+            if (error) {
+                throw error;
+            }
+        });
+    } catch (error) {
+        console.error(`Error: ${error.code}`);
+    }
+};

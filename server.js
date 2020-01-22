@@ -23,13 +23,17 @@ const server = serverIO(app, socket => {
 
     console.log(`User connected: ${id}`);
     reservationsService.start(reservation => {
+        socket.emit('newReservation', reservation);
         db.addReservation(reservation);
     });
 
     socket.on('getHotels', db.getHotels);
     socket.on('getCurrencies', db.getCurrencies);
     socket.on('getReservations', db.getReservations);
-    socket.on('disconnect', () => console.log('User disconnected'));
+    socket.on('disconnect', () => {
+        reservationsService.stop();
+        db.cleanReservations();
+    });
 });
 
 server.listen(port, () => {
