@@ -13,11 +13,7 @@ const SelectCurrency = ({ currencies, selectedCurrency, onChangeCurrency }) => {
                 {currencies.sort().map(currency => {
                     if (currency === selectedCurrency) {
                         return (
-                            <option
-                                key={currency}
-                                value={currency}
-                                defaultValue
-                            >
+                            <option key={currency} value={currency} selected>
                                 {currency}
                             </option>
                         );
