@@ -72,9 +72,7 @@ export const Sleev = styled.div`
     }
 
     @media (max-width: 425px) {
-        columns: 2;
-        height: 240px;
-        width: auto;
+        height: 170px;
         padding: 30px;
         margin: 10px;
         display: flex;
@@ -85,17 +83,28 @@ export const Sleev = styled.div`
 `;
 
 export const Label = styled.div`
+    width: 60px;
     color: gray;
     font-size: 12px;
+`;
+
+export const Value = styled.span`
+    width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const Uuid = styled.div`
     position: absolute;
     color: gray;
-    margin: 3px 5px;
+    align-self: center;
+    padding: 4px;
+    margin: 0 auto;
     font-size: 12px;
     bottom: 0;
     left: 0;
+
     @media (max-width: 425px) {
         left: initial;
     }
@@ -120,22 +129,22 @@ export const CheckOut = styled.div`
 export const Hotel = styled.div`
     order: 2;
     display: flex;
-    width: 30%;
+    width: auto;
     flex-direction: column;
     justify-content: space-evenly;
-    overflow: hidden;
     white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
 `;
 
 export const Room = styled.div`
     order: 3;
     display: flex;
-    width: 30%;
+    width: auto;
     flex-direction: column;
     justify-content: space-evenly;
-    overflow: hidden;
     white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
 `;
 

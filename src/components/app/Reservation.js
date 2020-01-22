@@ -1,9 +1,11 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 
 import {
     Sleev,
     Label,
-    GuestName,
+    Value,
+    Field,
     Uuid,
     CheckIn,
     CheckOut,
@@ -38,23 +40,24 @@ const Reservation = ({
             <Uuid>{uuid}</Uuid>
             <CheckIn>
                 <Label>Check-in</Label>
-                {checkIn.toLocaleDateString()}
+                <Value>{checkIn.toLocaleDateString()}</Value>
             </CheckIn>
             <CheckOut>
                 <Label>Check-out</Label>
-                {chekOut.toLocaleDateString()}
+                <Value>{chekOut.toLocaleDateString()}</Value>
             </CheckOut>
             <Hotel>
                 <Label>Hotel</Label>
-                {hotel.name}
+                <Value data-tip={hotel.name}>{hotel.name}</Value>
             </Hotel>
             <Room>
                 <Label>Room</Label>
-                {room_name}
+                <Value data-tip={room_name}>{room_name}</Value>
             </Room>
             <Price>
                 {convertedPrice} {selectedCurrency}
             </Price>
+            <ReactTooltip />
         </Sleev>
     );
 };
