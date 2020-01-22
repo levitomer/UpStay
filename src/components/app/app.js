@@ -3,7 +3,14 @@ import SVGUpsay from './svg-upstay';
 import Reservations from './Reservations';
 import FilterReservations from './FilterReservations';
 import SelectCurrency from './SelectCurrency';
-import { Container, Welcome, ReservationsSection, ToolBar } from './App.style';
+import ReservationLoader from './ReservationLoader';
+import {
+    Container,
+    Welcome,
+    Span,
+    ReservationsSection,
+    ToolBar
+} from './App.style';
 import clientIO from 'socket.io-client';
 import axios from 'axios';
 
@@ -96,12 +103,30 @@ class App extends React.Component {
             hotels
         } = this.state;
 
-        if (!reservations.length || !currencies.length || !hotels.length) {
+        const loading = !currencies.length || !hotels.length;
+
+        if (loading) {
             return (
                 <Container>
-                    <Welcome>Welcome to</Welcome>
-                    <SVGUpsay />
+                    <Welcome>
+                        <Span>Welcome to</Span>
+                        <SVGUpsay />
+                    </Welcome>
                 </Container>
+            );
+        }
+
+        if (!reservations.length) {
+            return (
+                <ReservationsSection>
+                    <SVGUpsay />
+                    <Welcome>Reservations</Welcome>
+                    {Array(10)
+                        .fill()
+                        .map((_, i) => (
+                            <ReservationLoader key={i} />
+                        ))}
+                </ReservationsSection>
             );
         }
 

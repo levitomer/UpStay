@@ -1,6 +1,5 @@
 import React from 'react';
-import SVGUpsay from './svg-upstay';
-import { Container, Welcome, ReservationSection } from './App.style';
+import { ReservationSection } from './App.style';
 import Reservation from './Reservation';
 
 class Reservations extends React.Component {
@@ -16,14 +15,6 @@ class Reservations extends React.Component {
             currencyQuote
         } = this.props;
 
-        if (!reservations) {
-            return (
-                <Container>
-                    <Welcome>Loading Reservations</Welcome>
-                    <SVGUpsay />
-                </Container>
-            );
-        }
         return (
             <ReservationSection>
                 {reservations.map(reservation => (
