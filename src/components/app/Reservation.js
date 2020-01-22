@@ -38,11 +38,11 @@ const Reservation = ({
             <Uuid>{uuid}</Uuid>
             <CheckIn>
                 <Label>Check-in</Label>
-                {checkIn.toLocaleDateString()}
+                {checkIn.toLocaleString()}
             </CheckIn>
             <CheckOut>
                 <Label>Check-out</Label>
-                {chekOut.toLocaleDateString()}
+                {chekOut.toLocaleString()()}
             </CheckOut>
             <Hotel>
                 <Label>Hotel</Label>

@@ -71,7 +71,8 @@ class App extends React.Component {
             .then(response => {
                 const quote = Object.values(response.data.quotes)[0];
                 this.setState({
-                    currencyQuote: quote
+                    currencyQuote: quote,
+                    selectedCurrency: selectedCurrency
                 });
             })
             .catch(error => console.log(error));
