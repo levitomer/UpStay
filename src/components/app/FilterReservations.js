@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from './App.style';
+import { Input } from './app.style';
 
 const FilterReservations = ({ onFilterReservations }) => {
     return (
