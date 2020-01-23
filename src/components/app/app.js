@@ -12,9 +12,7 @@ import {
     ToolBar
 } from './App.style';
 import clientIO from 'socket.io-client';
-import axios from 'axios';
 
-const access_key = 'c8b57b494662b67e04c0fd31bf3830c2';
 const socket = clientIO.connect('http://localhost:8081');
 
 class App extends React.Component {
@@ -27,7 +25,7 @@ class App extends React.Component {
             selectedUuid: null,
             currencies: [],
             selectedCurrency: 'USD',
-            currencyQuote: 3.45
+            quotes: {}
         };
 
         this.handleGetHotels = this.handleGetHotels.bind(this);
@@ -38,17 +36,38 @@ class App extends React.Component {
         this.handleFilterReservations = this.handleFilterReservations.bind(
             this
         );
+        this.handleGetQuotes = this.handleGetQuotes.bind(this);
     }
 
     componentDidMount() {
         socket.emit('getHotels', this.handleGetHotels);
         socket.emit('getCurrencies', this.handleGetCurrencies);
         socket.emit('getReservations', this.handleGetReservations);
+        socket.emit(
+            'getQuotes',
+            { selectedCurrency: this.state.selectedCurrency },
+            this.handleGetQuotes
+        );
         socket.on('newReservation', this.handleNewReservation);
     }
 
+    componentDidUpdate(_, prevState) {
+        if (this.state.selectedCurrency !== prevState.selectedCurrency) {
+            socket.emit(
+                'getQuotes',
+                { selectedCurrency: this.state.selectedCurrency },
+                this.handleGetQuotes
+            );
+        }
+    }
     componentWillUnmount() {
         socket.close();
+    }
+
+    handleGetQuotes(quotes) {
+        this.setState({
+            quotes
+        });
     }
 
     handleGetHotels(hotels) {
@@ -64,18 +83,9 @@ class App extends React.Component {
     }
 
     handleChangeCurrency(selectedCurrency) {
-        axios
-            .get(
-                `http://api.currencylayer.com/live?access_key=${access_key}&currencies=${selectedCurrency}`
-            )
-            .then(response => {
-                const quote = Object.values(response.data.quotes)[0];
-                this.setState({
-                    currencyQuote: quote,
-                    selectedCurrency: selectedCurrency
-                });
-            })
-            .catch(error => console.log(error));
+        this.setState({
+            selectedCurrency: selectedCurrency
+        });
     }
 
     handleGetReservations(reservations) {
@@ -100,7 +110,7 @@ class App extends React.Component {
             currencies,
             selectedUuid,
             selectedCurrency,
-            currencyQuote,
+            quotes,
             hotels
         } = this.state;
 
@@ -117,7 +127,7 @@ class App extends React.Component {
             );
         }
 
-        if (!reservations.length) {
+        if (!reservations.length || !quotes) {
             return (
                 <ReservationsSection>
                     <SVGUpsay />
@@ -154,7 +164,7 @@ class App extends React.Component {
                               )
                             : reservations
                     }
-                    currencyQuote={currencyQuote}
+                    quotes={quotes}
                     selectedCurrency={selectedCurrency}
                 />
             </ReservationsSection>

@@ -1,6 +1,7 @@
 import express from 'express';
 import routes from '@upstay/routes';
 import * as reservationsService from '@upstay/services/reservations';
+import * as currenciesService from '@upstay/services/currencies';
 import serverDev from './server.dev';
 import serverIO from './server.io';
 import * as db from '@upstay/db/reservations';
@@ -30,6 +31,10 @@ const server = serverIO(app, socket => {
     socket.on('getHotels', db.getHotels);
     socket.on('getCurrencies', db.getCurrencies);
     socket.on('getReservations', db.getReservations);
+    socket.on('getQuotes', ({ selectedCurrency }, quotes) =>
+        currenciesService.getQuotes(selectedCurrency, quotes)
+    );
+
     socket.on('disconnect', () => {
         reservationsService.stop();
         db.cleanReservations();

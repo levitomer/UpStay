@@ -2,33 +2,26 @@ import React from 'react';
 import { ReservationSection } from './App.style';
 import Reservation from './Reservation';
 
-class Reservations extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        const {
-            reservations,
-            hotels,
-            selectedCurrency,
-            currencyQuote
-        } = this.props;
-
-        return (
-            <ReservationSection>
-                {reservations.map(reservation => (
+const Reservations = ({ reservations, hotels, quotes, selectedCurrency }) => {
+    return (
+        <ReservationSection>
+            {reservations.map(reservation => {
+                const { price, currency } = reservation;
+                const symbols = `${selectedCurrency}${currency.toUpperCase()}`;
+                const quote = quotes[symbols];
+                const convertedPrice = Math.floor(price * quote * 100) / 100;
+                return (
                     <Reservation
-                        key={reservation.id}
+                        key={reservation.uuid}
                         hotels={hotels}
-                        currencyQuote={currencyQuote}
+                        price={convertedPrice}
                         selectedCurrency={selectedCurrency}
                         reservation={reservation}
                     />
-                ))}
-            </ReservationSection>
-        );
-    }
-}
+                );
+            })}
+        </ReservationSection>
+    );
+};
 
 export default Reservations;

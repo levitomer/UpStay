@@ -14,25 +14,12 @@ import {
     Price
 } from './App.style';
 
-const Reservation = ({
-    reservation,
-    hotels,
-    selectedCurrency,
-    currencyQuote
-}) => {
-    const {
-        uuid,
-        hotel_id,
-        price,
-        room_name,
-        arrival_date,
-        nights
-    } = reservation;
+const Reservation = ({ reservation, hotels, selectedCurrency, price }) => {
+    const { uuid, hotel_id, room_name, arrival_date, nights } = reservation;
 
     const checkIn = new Date(arrival_date);
     const chekOut = new Date(arrival_date);
     chekOut.setDate(checkIn.getDate() + nights);
-    const convertedPrice = Math.floor((price / currencyQuote) * 100) / 100;
     const hotel = hotels.find(({ id }) => hotel_id === id);
 
     return (
@@ -55,7 +42,7 @@ const Reservation = ({
                 <Value data-tip={room_name}>{room_name}</Value>
             </Room>
             <Price>
-                {convertedPrice} {selectedCurrency}
+                {!price ? '' : price} {selectedCurrency}
             </Price>
             <ReactTooltip />
         </Sleev>
