@@ -10,7 +10,7 @@ import {
     Span,
     ReservationsSection,
     ToolBar
-} from './App.style';
+} from './app.style';
 import clientIO from 'socket.io-client';
 
 const socket = clientIO.connect('http://localhost:8081');

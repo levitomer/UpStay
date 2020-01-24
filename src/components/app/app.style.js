@@ -50,7 +50,7 @@ export const ReservationSection = styled.div`
     justify-content: space-evenly;
 `;
 
-export const Sleev = styled.div`
+export const Card = styled.div`
     transition: box-shadow 0.3s;
     font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue',
         Helvetica, Arial, 'Lucida Grande', sans-serif;
@@ -72,13 +72,13 @@ export const Sleev = styled.div`
     }
 
     @media (max-width: 425px) {
-        height: 170px;
+        height: 200px;
         padding: 30px;
-        margin: 10px;
         display: flex;
-        flex-direction: column;
+        font-size: 13px;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
+        align-content: space-evenly;
     }
 `;
 
@@ -106,7 +106,7 @@ export const Uuid = styled.div`
     left: 0;
 
     @media (max-width: 425px) {
-        left: initial;
+        left: unset;
     }
 `;
 
@@ -116,6 +116,10 @@ export const CheckIn = styled.div`
     width: 20%;
     flex-direction: column;
     justify-content: space-evenly;
+
+    @media (max-width: 425px) {
+        width: 50%;
+    }
 `;
 
 export const CheckOut = styled.div`
@@ -124,6 +128,10 @@ export const CheckOut = styled.div`
     width: 20%;
     flex-direction: column;
     justify-content: space-evenly;
+
+    @media (max-width: 425px) {
+        width: 50%;
+    }
 `;
 
 export const Hotel = styled.div`
@@ -135,6 +143,10 @@ export const Hotel = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media (max-width: 425px) {
+        width: 100%;
+    }
 `;
 
 export const Room = styled.div`
@@ -146,6 +158,10 @@ export const Room = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media (max-width: 425px) {
+        width: 100%;
+    }
 `;
 
 export const Price = styled.div`
