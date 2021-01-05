@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "dependencies": {
-        "axios": "^0.19.1",
+        "axios": "^0.21.1",
         "core-js": "^3.6.1",
         "currency-symbol-map": "^4.0.4",
         "dotenv": "^8.2.0",
